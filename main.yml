@@ -1,0 +1,64 @@
+---
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create resource group
+    azure_rm_resourcegroup:
+      name: ansible-tower-plays-rg
+      location: westeurope
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: ansible-tower-plays-rg
+      name: ansible-tower-plays-vnet
+      address_prefixes: "10.0.0.0/16"
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: ansible-tower-plays-rg
+      name: ansible-tower-subnet-01
+      address_prefix: "10.0.1.0/24"
+      virtual_network: ansible-tower-plays-vnet
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: ansible-tower-plays-rg
+      allocation_method: Static
+      name: ansible-tower-public-ip
+    register: output_ip_address
+  - name: Public IP of VM
+    debug:
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+      resource_group: ansible-tower-plays-rg
+      name: ansible-tower-security-group
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: ansible-tower-plays-rg
+      name: ansible-tower-eval-vm-01-nic
+      virtual_network: ansible-tower-plays-vnet
+      subnet: ansible-tower-subnet-01
+      public_ip_name: ansible-tower-public-ip
+      security_group: ansible-tower-security-group
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: ansible-tower-plays-rg
+      name: ansible-tower-eval-vm-01
+      vm_size: Standard_DS1_v2
+      admin_username: azureuser
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/luadm/.ssh/authorized_keys
+          key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhP54g6sNrRI+LEMzjaTCnwZmp+RJoOW6HCWfE6lJ8huqDr5izlJFYf82tNst2sI6wtoPFC2IQ4/xQir7Q0CoYosDqjapVp0TsEC91ixP2HUTRQCUuDP/RLF+jUqxxSFhqeXRqdcYdiBHd8p/Zcys9j4zexJPNU1TWPJQ7VZ0YA1SDkY6gw9n+sUUDEjJkf2M5esXzlXRLTCapRVjnOZPFRMq8J9xsACSo5qDGMdvKWK9S6+Vd2J+dBPSvlW/s9WmSAwQkR2/+SVc5K5BB3brNJ4GLgCXfptdRsD8Ku5D4z9bcOKpiejE79zqEZhqArXfuvxtv7vweI9CC5PB/cShvqTsvWhoUY5dH1yj2jbRV7O3O7O7575ptWI3dFOEzZQAbPaCM2muN/JEH4krkrhoiTU+fu5sC3/I12Gr/w+5L9mp4PvtyMkVtztTawqZH8WoAa6cPMrKefO1DGy/u3PTEVT7+vC0h+q+pE+9hZpafWDHwG87+YlzRJkPwGDLzNRQc1uyebA6w7tPte19g1G4zl/+/qKt1bFWBfNFrv/UvU/vwFJGaYWvq8ryQzYVyO5mAKxAAO22Skuxd1ovWlllxXQWPo37H/5gLHxShIKstjFSlzdebXn34wqvNIbBxE+kuLsf6mMkvpTeH/6oV9Rv6UreIXR9ga9/cxjdLgeLodw== luadm@lusof01"
+      network_interfaces: ansible-tower-eval-vm-01-nic
+      image:
+        offer: CentOS
+        publisher: OpenLogic
+        sku: '7.5'
+        version: latest
