@@ -54,7 +54,7 @@
       admin_username: azureuser
       ssh_password_enabled: false
       ssh_public_keys:
-        - path: /home/luadm/.ssh/authorized_keys
+        - path: /home/azureuser/.ssh/authorized_keys
           key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhP54g6sNrRI+LEMzjaTCnwZmp+RJoOW6HCWfE6lJ8huqDr5izlJFYf82tNst2sI6wtoPFC2IQ4/xQir7Q0CoYosDqjapVp0TsEC91ixP2HUTRQCUuDP/RLF+jUqxxSFhqeXRqdcYdiBHd8p/Zcys9j4zexJPNU1TWPJQ7VZ0YA1SDkY6gw9n+sUUDEjJkf2M5esXzlXRLTCapRVjnOZPFRMq8J9xsACSo5qDGMdvKWK9S6+Vd2J+dBPSvlW/s9WmSAwQkR2/+SVc5K5BB3brNJ4GLgCXfptdRsD8Ku5D4z9bcOKpiejE79zqEZhqArXfuvxtv7vweI9CC5PB/cShvqTsvWhoUY5dH1yj2jbRV7O3O7O7575ptWI3dFOEzZQAbPaCM2muN/JEH4krkrhoiTU+fu5sC3/I12Gr/w+5L9mp4PvtyMkVtztTawqZH8WoAa6cPMrKefO1DGy/u3PTEVT7+vC0h+q+pE+9hZpafWDHwG87+YlzRJkPwGDLzNRQc1uyebA6w7tPte19g1G4zl/+/qKt1bFWBfNFrv/UvU/vwFJGaYWvq8ryQzYVyO5mAKxAAO22Skuxd1ovWlllxXQWPo37H/5gLHxShIKstjFSlzdebXn34wqvNIbBxE+kuLsf6mMkvpTeH/6oV9Rv6UreIXR9ga9/cxjdLgeLodw== luadm@lusof01"
       network_interfaces: ansible-tower-eval-vm-01-nic
       image:
