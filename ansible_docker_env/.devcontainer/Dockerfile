@@ -32,11 +32,19 @@ ENV NVM_SYMLINK_CURRENT=true \
 RUN if [ "${INSTALL_AZURE_CLI}" = "true" ]; then bash /tmp/library-scripts/azcli-debian.sh; fi \
     && if [ "${NODE_VERSION}" != "none" ]; then bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${USERNAME}"; fi \
     && if [ "${INSTALL_DOCKER}" = "true" ]; then \
-        bash /tmp/library-scripts/docker-debian.sh "true" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}"; \
+    bash /tmp/library-scripts/docker-debian.sh "true" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}"; \
     else \
-        echo '#!/bin/bash\n"$@"' > /usr/local/share/docker-init.sh && chmod +x /usr/local/share/docker-init.sh; \
+    echo '#!/bin/bash\n"$@"' > /usr/local/share/docker-init.sh && chmod +x /usr/local/share/docker-init.sh; \
     fi \
     && rm -rf /var/lib/apt/lists/*
+
+# Adding custom .bashrc
+COPY source-bashrc/.bashrc /root/.bashrc
+
+# Install autocompletion for Git, Azure CLI, Docker-compose CLI, Docker CLI
+COPY source-bashrc/set-bash-auto-completion.sh /tmp/set-bash-auto-completion.sh
+RUN mkdir /root/.bash_completion_custom/ && bash /tmp/set-bash-auto-completion.sh
+RUN rm -rf /tmp/set-bash-auto-completion.sh
 
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]

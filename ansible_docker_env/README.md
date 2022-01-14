@@ -10,9 +10,8 @@ This abstraction allows you to open any folder inside (or mounted into) the prep
 | Metadata                    | Value                                             |
 | --------------------------- | ------------------------------------------------- |
 | *Categories*                | Infrastructure As Code, Configuration Management  |
-| *Definition type*           | Dockerfile                                        |
+| *Definition type*           | Dockerfile, Docker Compose                        |
 | *Supported architecture(s)* | x86-64, arm64/aarch64 for `bullseye` based images |
-| *Works in Codespaces*       | Yes                                               |
 | *Container host OS support* | Linux, macOS, Windows                             |
 | *Container OS*              | Debian                                            |
 | *Languages, platforms*      | Azure, Ansible, Azure CLI, PowerShell, Python     |
