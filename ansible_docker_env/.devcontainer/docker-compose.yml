@@ -15,6 +15,8 @@ services:
       - ..:/workspace:cached
       # The above line enable the option to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
       - /var/run/docker.sock:/var/run/docker-host.sock
-    # Set memory limits on container level
+      # Uncomment the next section if you would like to enable external repos. See https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount.
+      # - ~/repos:/repos:cached
+      # Set memory limits on container level
     mem_limit: 2g
     mem_reservation: 2g
