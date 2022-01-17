@@ -14,10 +14,10 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# Setting up Git with autocompletion
+# Setting up Ansible CLI with autocompletion
 sudo curl \
-    -L https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash \
-    -o ~/.bash_completion_custom/.git-completion.sh
+    -L https://raw.githubusercontent.com/dysosmus/ansible-completion/master/ansible-completion.bash \
+    -o ~/.bash_completion_custom/.ansible-completion.sh
 
 # Setting up Azure CLI with autocompletion
 sudo curl \
@@ -33,5 +33,10 @@ sudo curl \
 sudo curl \
     -L https://raw.githubusercontent.com/docker/compose/1.29.2/contrib/completion/bash/docker-compose \
     -o ~/.bash_completion_custom/.docker-compose-completion.sh
+
+# Setting up Git with autocompletion
+sudo curl \
+    -L https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash \
+    -o ~/.bash_completion_custom/.git-completion.sh
 
 echo "Done!"

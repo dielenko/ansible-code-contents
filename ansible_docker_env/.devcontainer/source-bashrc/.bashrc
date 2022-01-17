@@ -41,9 +41,9 @@ __bash_prompt() {
 __bash_prompt
 export PROMPT_DIRTRIM=4
 
-# Git CLI autocompletion
-if [ -f ~/.bash_completion_custom/.git-completion.sh ]; then
-   source ~/.bash_completion_custom/.git-completion.sh
+# Ansible CLI autocompletion
+if [ -f ~/.bash_completion_custom/.ansible-completion.sh ]; then
+   source ~/.bash_completion_custom/.ansible-completion.sh
 fi
 
 # Azure CLI autocompletion
@@ -59,4 +59,9 @@ fi
 # Docker-compose CLI autocompletion
 if [ -f ~/.bash_completion_custom/.docker-compose-completion.sh ]; then
    source ~/.bash_completion_custom/.docker-compose-completion.sh
+fi
+
+# Git CLI autocompletion
+if [ -f ~/.bash_completion_custom/.git-completion.sh ]; then
+   source ~/.bash_completion_custom/.git-completion.sh
 fi
