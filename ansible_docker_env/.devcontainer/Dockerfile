@@ -17,8 +17,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y libssl-dev libffi-dev python3-dev python3-pip \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-# Install Ansible
-RUN pip3 install ansible[azure]
+# Install Ansible 2.10 with with azure.azcollection
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && pip3 install ansible[azure] \
+    && ansible-galaxy collection install azure.azcollection \
+    && pip3 install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt
 
 # [Option] Install Azure CLI
 ARG INSTALL_AZURE_CLI="true"
