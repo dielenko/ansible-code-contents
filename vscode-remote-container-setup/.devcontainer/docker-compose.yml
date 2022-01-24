@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # [Optional] You can use build args to set options in the Dockerfile
+      args:
+        INSTALL_AZURE_CLI: "true"
+        INSTALL_DOCKER: "true"
+        NODE_VERSION: "lts/*"
+    volumes:
+      # This is where VS Code should expect to find your project's source code and the value of "workspaceFolder" in .devcontainer/devcontainer.json
+      - ..:/workspace:cached
+      # The above line enable the option to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
+      - /var/run/docker.sock:/var/run/docker-host.sock
+      # Commented the next section if you would like to disable external repos/files mount. See https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount.
+      - ~/repos:/repos:cached
+      # Set memory limits on container level
+    mem_limit: 2g
+    mem_reservation: 2g
